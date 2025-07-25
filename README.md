@@ -1,5 +1,7 @@
 # 贪吃蛇游戏
 
+**中文** | [English](README_EN.md)
+
 这是一个使用Gatsby和React TypeScript构建的贪吃蛇游戏。
 
 ## 功能特性
