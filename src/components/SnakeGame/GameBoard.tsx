@@ -27,15 +27,17 @@ const GameBoard: React.FC<GameBoardProps> = ({ snake, food, gameStatus }) => {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 58, 0.9) 100%)',
+    backdropFilter: 'blur(10px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '7px',
+    borderRadius: '10px',
     fontSize: '24px',
     fontWeight: 'bold',
     color: '#ffffff',
-    zIndex: 10
+    zIndex: 10,
+    animation: 'overlayFadeIn 0.3s ease-out'
   };
 
   const renderCell = (x: number, y: number) => {
@@ -46,17 +48,25 @@ const GameBoard: React.FC<GameBoardProps> = ({ snake, food, gameStatus }) => {
     let backgroundColor = COLORS.BOARD;
     let borderRadius = '2px';
     let content = '';
+    let boxShadow = 'none';
+    let className = 'game-cell';
 
     if (isSnakeHead) {
       backgroundColor = COLORS.SNAKE_HEAD;
       borderRadius = '50%';
+      boxShadow = `0 0 20px ${COLORS.SNAKE_HEAD}, 0 0 40px ${COLORS.SNAKE_HEAD}, 0 0 60px ${COLORS.SNAKE_HEAD}`;
+      className = 'snake-head-glow game-cell';
     } else if (isSnakeBody) {
       backgroundColor = COLORS.SNAKE;
-      borderRadius = '4px';
+      borderRadius = '6px';
+      boxShadow = `0 0 10px ${COLORS.SNAKE}`;
+      className = 'snake-segment game-cell';
     } else if (isFood) {
       backgroundColor = COLORS.FOOD;
       borderRadius = '50%';
       content = '🍎';
+      boxShadow = `0 0 25px ${COLORS.FOOD}, 0 0 50px ${COLORS.FOOD}`;
+      className = 'food-pulse game-cell';
     }
 
     const cellStyle: React.CSSProperties = {
@@ -64,16 +74,18 @@ const GameBoard: React.FC<GameBoardProps> = ({ snake, food, gameStatus }) => {
       height: `${GAME_CONFIG.GRID_SIZE}px`,
       backgroundColor,
       borderRadius,
+      boxShadow,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: '12px',
-      transition: 'all 0.1s ease'
+      transition: 'all 0.15s ease'
     };
 
     return (
       <div
         key={`${x}-${y}`}
+        className={className}
         style={cellStyle}
       >
         {content}
@@ -92,27 +104,61 @@ const GameBoard: React.FC<GameBoardProps> = ({ snake, food, gameStatus }) => {
     switch (gameStatus) {
       case GameStatus.WAITING:
         return (
-          <div style={{ textAlign: 'center' }}>
-            <div>点击开始游戏</div>
-            <div style={{ fontSize: '16px', marginTop: '10px', opacity: 0.8 }}>
+          <div className="overlay-content" style={{ textAlign: 'center' }}>
+            <div style={{
+              fontSize: '28px',
+              marginBottom: '15px',
+              background: 'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              🎮 点击开始游戏
+            </div>
+            <div style={{ 
+              fontSize: '16px', 
+              opacity: 0.8,
+              color: 'rgba(255, 255, 255, 0.7)'
+            }}>
               或按空格键开始
             </div>
           </div>
         );
       case GameStatus.PAUSED:
         return (
-          <div style={{ textAlign: 'center' }}>
-            <div>游戏暂停</div>
-            <div style={{ fontSize: '16px', marginTop: '10px', opacity: 0.8 }}>
+          <div className="overlay-content" style={{ textAlign: 'center' }}>
+            <div style={{
+              fontSize: '28px',
+              marginBottom: '15px',
+              color: '#FF9800'
+            }}>
+              ⏸️ 游戏暂停
+            </div>
+            <div style={{ 
+              fontSize: '16px', 
+              opacity: 0.8,
+              color: 'rgba(255, 255, 255, 0.7)'
+            }}>
               按空格键继续
             </div>
           </div>
         );
       case GameStatus.GAME_OVER:
         return (
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ color: '#ff6b6b' }}>游戏结束</div>
-            <div style={{ fontSize: '16px', marginTop: '10px', opacity: 0.8 }}>
+          <div className="overlay-content game-over-content" style={{ textAlign: 'center' }}>
+            <div style={{
+              fontSize: '32px',
+              marginBottom: '15px',
+              color: '#ff6b6b',
+              textShadow: '0 0 20px rgba(255, 107, 107, 0.5)'
+            }}>
+              💀 游戏结束
+            </div>
+            <div style={{ 
+              fontSize: '16px', 
+              opacity: 0.8,
+              color: 'rgba(255, 255, 255, 0.7)'
+            }}>
               按空格键或点击重新开始
             </div>
           </div>

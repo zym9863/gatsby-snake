@@ -1,6 +1,5 @@
 import React from 'react';
 import { Direction, GameStatus } from './types';
-import { COLORS } from './constants';
 
 interface GameControlsProps {
   gameStatus: GameStatus;
@@ -15,43 +14,6 @@ const GameControls: React.FC<GameControlsProps> = ({
   onReset,
   onDirectionChange
 }) => {
-  const buttonStyle: React.CSSProperties = {
-    backgroundColor: COLORS.BUTTON,
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '8px',
-    padding: '12px 24px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    margin: '0 10px'
-  };
-
-  const buttonHoverStyle: React.CSSProperties = {
-    ...buttonStyle,
-    backgroundColor: COLORS.BUTTON_HOVER,
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
-  };
-
-  const directionButtonStyle: React.CSSProperties = {
-    backgroundColor: COLORS.BUTTON,
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '8px',
-    padding: '12px',
-    fontSize: '18px',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    margin: '4px',
-    width: '48px',
-    height: '48px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
-
   const getStartButtonText = () => {
     switch (gameStatus) {
       case GameStatus.WAITING:
@@ -67,24 +29,6 @@ const GameControls: React.FC<GameControlsProps> = ({
     }
   };
 
-  const handleButtonHover = (e: React.MouseEvent<HTMLButtonElement>) => {
-    Object.assign(e.currentTarget.style, buttonHoverStyle);
-  };
-
-  const handleButtonLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
-    Object.assign(e.currentTarget.style, buttonStyle);
-  };
-
-  const handleDirectionButtonHover = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.style.backgroundColor = COLORS.BUTTON_HOVER;
-    e.currentTarget.style.transform = 'scale(1.1)';
-  };
-
-  const handleDirectionButtonLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.style.backgroundColor = COLORS.BUTTON;
-    e.currentTarget.style.transform = 'scale(1)';
-  };
-
   return (
     <div className="game-controls" style={{
       display: 'flex',
@@ -94,13 +38,10 @@ const GameControls: React.FC<GameControlsProps> = ({
       marginTop: '20px'
     }}>
       {/* 主控制按钮 */}
-      <div style={{ display: 'flex', gap: '10px' }}>
+      <div style={{ display: 'flex', gap: '15px' }}>
         <button
           className="control-button game-button"
-          style={buttonStyle}
           onClick={onStart}
-          onMouseEnter={handleButtonHover}
-          onMouseLeave={handleButtonLeave}
         >
           {getStartButtonText()}
         </button>
@@ -108,10 +49,7 @@ const GameControls: React.FC<GameControlsProps> = ({
         {gameStatus === GameStatus.GAME_OVER && (
           <button
             className="control-button game-button"
-            style={buttonStyle}
             onClick={onReset}
-            onMouseEnter={handleButtonHover}
-            onMouseLeave={handleButtonLeave}
           >
             重置游戏
           </button>
@@ -123,7 +61,7 @@ const GameControls: React.FC<GameControlsProps> = ({
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center',
-        gap: '4px'
+        gap: '8px'
       }}>
         <div style={{ fontSize: '14px', color: '#888', marginBottom: '10px' }}>
           移动端控制
@@ -131,10 +69,8 @@ const GameControls: React.FC<GameControlsProps> = ({
         <div>
           <button
             className="direction-button"
-            style={directionButtonStyle}
+            style={{ width: '50px', height: '50px', margin: '2px' }}
             onClick={() => onDirectionChange(Direction.UP)}
-            onMouseEnter={handleDirectionButtonHover}
-            onMouseLeave={handleDirectionButtonLeave}
             disabled={gameStatus !== GameStatus.PLAYING}
           >
             ↑
@@ -143,30 +79,24 @@ const GameControls: React.FC<GameControlsProps> = ({
         <div style={{ display: 'flex', gap: '4px' }}>
           <button
             className="direction-button"
-            style={directionButtonStyle}
+            style={{ width: '50px', height: '50px', margin: '2px' }}
             onClick={() => onDirectionChange(Direction.LEFT)}
-            onMouseEnter={handleDirectionButtonHover}
-            onMouseLeave={handleDirectionButtonLeave}
             disabled={gameStatus !== GameStatus.PLAYING}
           >
             ←
           </button>
           <button
             className="direction-button"
-            style={directionButtonStyle}
+            style={{ width: '50px', height: '50px', margin: '2px' }}
             onClick={() => onDirectionChange(Direction.DOWN)}
-            onMouseEnter={handleDirectionButtonHover}
-            onMouseLeave={handleDirectionButtonLeave}
             disabled={gameStatus !== GameStatus.PLAYING}
           >
             ↓
           </button>
           <button
             className="direction-button"
-            style={directionButtonStyle}
+            style={{ width: '50px', height: '50px', margin: '2px' }}
             onClick={() => onDirectionChange(Direction.RIGHT)}
-            onMouseEnter={handleDirectionButtonHover}
-            onMouseLeave={handleDirectionButtonLeave}
             disabled={gameStatus !== GameStatus.PLAYING}
           >
             →

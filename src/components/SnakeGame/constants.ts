@@ -11,13 +11,13 @@ export const GAME_CONFIG = {
 };
 
 export const COLORS = {
-  BACKGROUND: '#1a1a2e',
-  BOARD: '#16213e',
-  SNAKE: '#0f4c75',
-  SNAKE_HEAD: '#3282b8',
-  FOOD: '#ff6b6b',
-  BORDER: '#0e3460',
+  BACKGROUND: '#0c0c1d',
+  BOARD: '#1a1a3a',
+  SNAKE: '#4a90e2',
+  SNAKE_HEAD: '#00d4ff',
+  FOOD: '#ff3366',
+  BORDER: '#2d1b69',
   TEXT: '#ffffff',
-  BUTTON: '#4a90e2',
-  BUTTON_HOVER: '#357abd'
+  BUTTON: '#4facfe',
+  BUTTON_HOVER: '#00f2fe'
 };
